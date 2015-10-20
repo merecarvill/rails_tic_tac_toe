@@ -1,0 +1,31 @@
+<h1>TicTacToe#play</h1>
+<p>Find me in app/views/tic_tac_toe/play.html.erb</p>
+
+<script>
+  function move(cell) {
+    if (cell.value != "x") {
+      cell.value = "x"
+    } else {
+      cell.value = "o"
+    }
+  }
+</script>
+
+<table align=center cellspacing=10>
+<tr>
+ <td><input type=button onclick="move(this)" value="  "></td>
+ <td><input type=button onclick="move(this)" value="  "></td>
+ <td><input type=button onclick="move(this)" value="  "></td>
+</tr><tr>
+ <td><input type=button onclick="move(this)" value="  "></td>
+ <td><input type=button onclick="move(this)" value="  "></td>
+ <td><input type=button onclick="move(this)" value="  "></td>
+</tr><tr>
+ <td><input type=button onclick="move(this)" value="  "></td>
+ <td><input type=button onclick="move(this)" value="  "></td>
+ <td><input type=button onclick="move(this)" value="  "></td>
+</tr>
+</table>
+
+<!-- <td class=cell><input class=cell name=c7 type=button accesskey=7 onclick="move(this);"></td> -->
+
