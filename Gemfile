@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem "tactical_tic_tac_toe"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use SCSS for stylesheets
