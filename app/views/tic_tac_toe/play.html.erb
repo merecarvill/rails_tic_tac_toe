@@ -1,31 +1,24 @@
-<h1>TicTacToe#play</h1>
-<p>Find me in app/views/tic_tac_toe/play.html.erb</p>
+<h1>Tactical Tic Tac Toe</h1>
 
-<script>
-  function move(cell) {
-    if (cell.value != "x") {
-      cell.value = "x"
-    } else {
-      cell.value = "o"
-    }
-  }
-</script>
+<% if flash[:alert] %>
+  <div class="alert"><%= "HEY, LISTEN! " + flash.alert %></div>
+<% end %>
+
+<p> <%= "It's player #{@current_player}'s turn..." %> </p>
 
 <table align=center cellspacing=10>
-<tr>
- <td><input type=button onclick="move(this)" value="  "></td>
- <td><input type=button onclick="move(this)" value="  "></td>
- <td><input type=button onclick="move(this)" value="  "></td>
-</tr><tr>
- <td><input type=button onclick="move(this)" value="  "></td>
- <td><input type=button onclick="move(this)" value="  "></td>
- <td><input type=button onclick="move(this)" value="  "></td>
-</tr><tr>
- <td><input type=button onclick="move(this)" value="  "></td>
- <td><input type=button onclick="move(this)" value="  "></td>
- <td><input type=button onclick="move(this)" value="  "></td>
-</tr>
+  <% row = 0 %>
+  <% @config.each_slice(3) do |row_contents| %>
+    <tr>
+    <% col = 0 %>
+    <% row_contents.each do |mark_in_space| %>
+      <td>
+        <%= button_to mark_in_space == "" ? "  " : mark_in_space,
+            tic_tac_toe_make_move_path(coordinates: [row, col], config: @config, current_player: @current_player) %>
+      </td>
+      <% col += 1 %>
+    <% end %>
+    </tr>
+    <% row += 1 %>
+  <% end %>
 </table>
-
-<!-- <td class=cell><input class=cell name=c7 type=button accesskey=7 onclick="move(this);"></td> -->
-
