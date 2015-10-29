@@ -1,29 +1,35 @@
 class TicTacToeController < ApplicationController
   def play
     @config = params[:config] || Array.new(9) { "" }
-    @current_player = params[:current_player] || "x"
   end
 
   def make_move
     config = params[:config]
-    current_player = params[:current_player]
     coordinates = params[:coordinates].map(&:to_i)
     board = TicTacToe::Board.new(size: 3, config: config.map { |mark| mark == "" ? nil : mark.to_sym })
 
     if board.blank?(coordinates)
-      config[coordinates_to_flat_index(coordinates, 3)] = current_player
-      board = board.mark_cell(current_player.to_sym, *coordinates)
-      current_player = toggle_player(current_player)
+      config[coordinates_to_flat_index(coordinates, 3)] = "x"
+      board = board.mark_cell(:x, *coordinates)
     else
       flash.alert = "Cannot alter a marked space - please select an empty space to make your move."
     end
 
     if board.has_winning_line?
-      redirect_to tic_tac_toe_game_over_path(message: "Player #{board.read_cell(*coordinates)} won!")
+      redirect_to tic_tac_toe_game_over_path(message: "Player won!")
     elsif board.all_marked?
       redirect_to tic_tac_toe_game_over_path(message: "The game ended in a draw.")
     else
-      redirect_to root_path(config: config, current_player: current_player)
+      computer_player = TicTacToe::ComputerPlayer.new(player_mark: :o, opponent_mark: :x)
+      computer_move_coordinates = computer_player.move(TicTacToe::Game.new(board: board))
+      config[coordinates_to_flat_index(computer_move_coordinates, 3)] = "o"
+      board = board.mark_cell(:o, *computer_move_coordinates)
+
+      if board.has_winning_line?
+        redirect_to tic_tac_toe_game_over_path(message: "Computer won... D:")
+      else
+        redirect_to root_path(config: config)
+      end
     end
   end
 
