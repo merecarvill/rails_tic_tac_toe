@@ -1,0 +1,26 @@
+<h1>Tactical Tic Tac Toe</h1>
+
+<% if flash[:alert] %>
+  <div class="alert"><%= "HEY, LISTEN! " + flash.alert %></div>
+<% end %>
+
+<p> <%= "It's player #{@current_player}'s turn..." %> </p>
+
+<table align=center cellspacing=10>
+  <% row = 0 %>
+  <% @board_configuration.each_slice(3) do |row_contents| %>
+    <tr>
+    <% col = 0 %>
+    <% row_contents.each do |mark| %>
+      <td>
+        <%= button_to mark,
+            tic_tac_toe_make_move_path(coordinates: [row, col],
+                                       board_configuration: @board_configuration,
+                                       current_player: @current_player) %>
+      </td>
+      <% col += 1 %>
+    <% end %>
+    </tr>
+    <% row += 1 %>
+  <% end %>
+</table>
