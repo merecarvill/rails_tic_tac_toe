@@ -4,23 +4,18 @@
   <div class="alert"><%= "HEY, LISTEN! " + flash.alert %></div>
 <% end %>
 
-<p> <%= "It's player #{@current_player}'s turn..." %> </p>
+<p> <%= "It's your turn..." %> </p>
 
 <table align=center cellspacing=10>
-  <% row = 0 %>
-  <% @board_configuration.each_slice(3) do |row_contents| %>
+  <% @board.all_coordinates.each_slice(3) do |row_coordinates| %>
     <tr>
-    <% col = 0 %>
-    <% row_contents.each do |mark| %>
+    <% row_coordinates.each do |coordinates| %>
       <td>
-        <%= button_to mark,
-            tic_tac_toe_make_move_path(coordinates: [row, col],
-                                       board_configuration: @board_configuration,
-                                       current_player: @current_player) %>
+        <%= button_to @board.read_space(coordinates),
+              tic_tac_toe_make_move_path(coordinates: coordinates,
+                                         board_configuration: @board.configuration) %>
       </td>
-      <% col += 1 %>
     <% end %>
     </tr>
-    <% row += 1 %>
   <% end %>
 </table>
